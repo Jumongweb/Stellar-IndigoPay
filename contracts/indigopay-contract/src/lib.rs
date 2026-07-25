@@ -121,6 +121,7 @@ pub enum CampaignStatus {
 }
 
 /// Input for registering a project via `batch_register_projects`.
+#[cfg(feature = "batch")]
 #[contracttype]
 #[derive(Clone, Debug)]
 pub struct ProjectInit {
@@ -131,6 +132,7 @@ pub struct ProjectInit {
 }
 
 /// Input for a single donation within a `batch_donate` call.
+#[cfg(feature = "batch")]
 #[contracttype]
 #[derive(Clone, Debug)]
 pub struct BatchDonation {
@@ -379,6 +381,7 @@ pub enum DataKey {
     // Governance
     Proposal(String),
     HasVoted(String, Address),
+    VoteCredits(String, Address),
     // Per-donor per-project cumulative donation total for milestone NFT gating
     DonorProjectTotal(String, Address),
     // Per-donor per-project sliding-window donation rate limit
@@ -1659,6 +1662,7 @@ impl IndigoPayContract {
         ensure_min_ttl(&env, VOTING_WINDOW_LEDGERS * 4);
     }
 
+    #[cfg(feature = "batch")]
     pub fn batch_register_projects(env: Env, admin: Address, projects: Vec<ProjectInit>) {
         require_admin_for_routine(&env, &admin);
         require_not_paused(&env);
@@ -2171,6 +2175,7 @@ impl IndigoPayContract {
         ensure_min_ttl(&env, VOTING_WINDOW_LEDGERS * 4);
     }
 
+    #[cfg(feature = "batch")]
     pub fn batch_donate(env: Env, token: Address, donations: Vec<BatchDonation>) {
         require_not_paused(&env);
 
