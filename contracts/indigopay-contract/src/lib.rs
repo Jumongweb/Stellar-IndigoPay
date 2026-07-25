@@ -34,10 +34,10 @@ use soroban_sdk::{
     Symbol, Vec,
 };
 
-#[cfg(feature = "impact")]
-use soroban_sdk::Bytes;
 #[cfg(feature = "usdc")]
 use soroban_sdk::contractclient;
+#[cfg(feature = "impact")]
+use soroban_sdk::Bytes;
 
 // ─── Oracle interface ─────────────────────────────────────────────────────────
 
